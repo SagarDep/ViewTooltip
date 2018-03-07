@@ -141,7 +141,7 @@ public class ViewTooltip {
         return tooltip_view;
     }
 
-    public void close(){
+    public void close() {
         tooltip_view.close();
     }
 
@@ -203,10 +203,16 @@ public class ViewTooltip {
         return this;
     }
 
-    public ViewTooltip setTextGravity (int textGravity) {
+    public ViewTooltip setTextGravity(int textGravity) {
         this.tooltip_view.setTextGravity(textGravity);
         return this;
     }
+
+    public ViewTooltip setTag(Object tag) {
+        this.tooltip_view.setTag(tag);
+        return this;
+    }
+
 
     public ViewTooltip clickToHide(boolean clickToHide) {
         this.tooltip_view.setClickToHide(clickToHide);
@@ -336,7 +342,7 @@ public class ViewTooltip {
 
         public void setPosition(Position position) {
             this.position = position;
-            switch (position){
+            switch (position) {
                 case TOP:
                     setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom + ARROW_HEIGHT);
                     break;
@@ -392,6 +398,20 @@ public class ViewTooltip {
             }
             postInvalidate();
         }
+
+        public void setTag(Object tag) {
+            if (childView instanceof TextView) {
+                this.childView.setTag(tag);
+            }
+        }
+
+        public Object getTag() {
+            if (childView instanceof TextView) {
+                return childView.getTag();
+            }
+            return null;
+        }
+
 
         public void setClickToHide(boolean clickToHide) {
             this.clickToHide = clickToHide;
@@ -572,8 +592,10 @@ public class ViewTooltip {
 
         private int getAlignOffset(int myLength, int hisLength) {
             switch (align) {
-                case END:    return hisLength - myLength;
-                case CENTER: return (hisLength - myLength) / 2;
+                case END:
+                    return hisLength - myLength;
+                case CENTER:
+                    return (hisLength - myLength) / 2;
             }
             return 0;
         }
@@ -581,7 +603,7 @@ public class ViewTooltip {
         private Path drawBubble(RectF myRect, float topLeftDiameter, float topRightDiameter, float bottomRightDiameter, float bottomLeftDiameter) {
             final Path path = new Path();
 
-            if(viewRect == null)
+            if (viewRect == null)
                 return path;
 
             topLeftDiameter = topLeftDiameter < 0 ? 0 : topLeftDiameter;
@@ -664,29 +686,29 @@ public class ViewTooltip {
                 int adjustedLeft = rect.left;
                 int adjustedRight = rect.right;
 
-                if((rect.centerX() + getWidth() / 2f) > screenWidth){
+                if ((rect.centerX() + getWidth() / 2f) > screenWidth) {
                     float diff = (rect.centerX() + getWidth() / 2f) - screenWidth;
 
-                    adjustedLeft -=  diff;
-                    adjustedRight -=  diff;
+                    adjustedLeft -= diff;
+                    adjustedRight -= diff;
 
                     setAlign(ALIGN.CENTER);
                     changed = true;
-                }else if((rect.centerX() - getWidth() / 2f) < 0){
+                } else if ((rect.centerX() - getWidth() / 2f) < 0) {
                     float diff = -(rect.centerX() - getWidth() / 2f);
 
-                    adjustedLeft +=  diff;
-                    adjustedRight +=  diff;
+                    adjustedLeft += diff;
+                    adjustedRight += diff;
 
                     setAlign(ALIGN.CENTER);
                     changed = true;
                 }
 
-                if(adjustedLeft < 0){
+                if (adjustedLeft < 0) {
                     adjustedLeft = 0;
                 }
 
-                if(adjustedRight > screenWidth){
+                if (adjustedRight > screenWidth) {
                     adjustedRight = screenWidth;
                 }
 
@@ -743,7 +765,7 @@ public class ViewTooltip {
         }
 
         public void setWithShadow(boolean withShadow) {
-            if(withShadow){
+            if (withShadow) {
                 bubblePaint.setShadowLayer(shadowWidth, 0, 0, Color.parseColor("#aaaaaa"));
             } else {
                 bubblePaint.setShadowLayer(0, 0, 0, Color.TRANSPARENT);

@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //final CheckBox customView = new CheckBox(MainActivity.this);
                 //customView.setText("test");
-                ViewTooltip
+                ViewTooltip.TooltipView tooltipView = ViewTooltip
                         .on(editText)
-                       // .customView(customView)
+                        // .customView(customView)
                         .position(ViewTooltip.Position.LEFT)
                         .text(getResources().getString(R.string.lorem))
                         .clickToHide(true)
