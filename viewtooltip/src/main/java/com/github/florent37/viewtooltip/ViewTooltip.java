@@ -366,6 +366,13 @@ public class ViewTooltip {
 
         public void setText(String text) {
             if (childView instanceof TextView) {
+                ((TextView) this.childView).setText(text);
+            }
+            postInvalidate();
+        }
+
+        public void setTextLikeHtml(String text) {
+            if (childView instanceof TextView) {
                 ((TextView) this.childView).setText(Html.fromHtml(text));
             }
             postInvalidate();
